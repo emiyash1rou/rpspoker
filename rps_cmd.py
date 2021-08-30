@@ -15,18 +15,6 @@ class RPS:
         self.card_deck = ['scissors'] * 21 + ['paper'] * 21 + ['rock'] * 21
         self.players= players
         self.win=""
-        self.pot=0
-    def settleBets(self):
-        counter=0
-        pot_requirement=int(input("Please settle a bet requirement: "))
-        for each_player in self.players:
-            if pot_requirement>each_player.chip:
-                print("Invalid amount. Player chip insufficient.")
-                return False
-        self.pot=pot_requirement
-        return True
-
-
     def poker_mode(self):
         occurence_checker=[]
         for each_player in self.players:
@@ -34,7 +22,6 @@ class RPS:
             occurence_checker.append(count_card)
         if occurence_checker[0]>occurence_checker[1]:
             self.win=self.players[0].name
-            self.players[0].chip
         elif occurence_checker[0]<occurence_checker[1]:
             self.win=self.players[1].name
         elif occurence_checker[0]==occurence_checker[1]:
@@ -152,13 +139,10 @@ def main():
     run=True
     for each_player in range(player_count):
         player_name=input("Please input player "+str(each_player+1)+"'s name")
-        player_chips=int(input("Please input player "+player_name+"'s chips"))
+        player_chips=input("Please input player "+player_name+"'s chips")
         players.append(Player(player_name,player_chips))
     game=RPS(players)
     while run:
-        while not game.settleBets():
-            print("Please try again.")
-            
         print("BEFORE: ",len(game.card_deck),game.card_deck)
         game.generatePlayerCards()
         print("AFTER: ",len(game.card_deck),game.card_deck)
